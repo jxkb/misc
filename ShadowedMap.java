@@ -1,3 +1,17 @@
+/**
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.   
+ */
+
 package com.ibm.utm.informix.server.database.datatypes.udt;
 
 import java.io.Serializable;
@@ -33,7 +47,7 @@ public class ShadowedMap<K, V> implements Map<K, V>, Cloneable, Serializable {
 	private Map<K, V> shadowedMap;
 	private Map<K, V> underlyingMap;
 	
-	public class MapEntry<K, V> implements Map.Entry<K, V> {
+	public class MapEntry implements Map.Entry<K, V> {
 	
 		private final K key;
 		private V value;
@@ -223,18 +237,18 @@ public class ShadowedMap<K, V> implements Map<K, V>, Cloneable, Serializable {
 			for (Map.Entry<K, V> entry : underlyingMap.entrySet()) {
 				K key = entry.getKey();
 				if (shadowedMap.containsKey(key)) {
-					ret.add(new MapEntry<K, V>(key, shadowedMap.get(key)));
+					ret.add(new MapEntry(key, shadowedMap.get(key)));
 				}
 				else {
 					V value = entry.getValue();
-					ret.add(new MapEntry<K, V>(key, value));
+					ret.add(new MapEntry(key, value));
 				}
 			}
 			for (Map.Entry<K, V> entry : shadowedMap.entrySet()) {
 				K key = entry.getKey();
 				V value = entry.getValue();		
 				if (!underlyingMap.containsKey(key)) {
-					ret.add(new MapEntry<K, V>(key, value));
+					ret.add(new MapEntry(key, value));
 				}
 			}
 			
